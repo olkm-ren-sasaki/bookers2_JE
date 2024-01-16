@@ -1,0 +1,13 @@
+<% if user_signed_in? %>
+  <div class="search_form row mt-2 ml-5">
+    <%= search_form_for q, url: search_path, method: :get, class: "mr-3" do |f| %>
+      <%= f.search_field :title_or_body_or_user_name_cont, placeholder: "Search" %>
+      <%= f.submit "本検索", class: "btn btn-primary" %>
+    <% end %>
+    <%= form_with url: search_path, method: :get, class: "tag_search_form" do |f| %>
+      <%= f.text_field :tag, placeholder: "Search by Tag" %>
+      <%= f.submit "タグ検索", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+<% end %>

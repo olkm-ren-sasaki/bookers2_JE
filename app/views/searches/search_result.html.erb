@@ -1,0 +1,7 @@
+<h2><%= "#{@range} search for '#{@word}'"%></h2>
+  <% if @result.present? %>
+    <%= render "books/index", books: @result %>
+  <% else %>
+    <p>一致する商品がありません。</p>
+  <% end %>
+</table>

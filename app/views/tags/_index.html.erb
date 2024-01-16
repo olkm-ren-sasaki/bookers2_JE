@@ -1,0 +1,6 @@
+<h2>タグ一覧</h2>
+<div class="tag_lists">
+    <% tags.each do |tag|%>
+        <%= link_to "# #{tag.name} (#{tag.taggings_count})", books_path(tag: tag.name), class: "badge bg-secondary text-light" %>
+    <% end %>
+</div>

@@ -12,13 +12,21 @@ end
 
 BOOK_AMOUT.times do |n|
   user_id = User.pluck(:id).sample
-  book_content = rand(100..999)
-  Book.create!(
+  # book_content = rand(100..999)
+  book = Book.create!(
     user_id: user_id,
-    title: "sample-#{user_id}-#{book_content}",
-    body: "sample#{user_id}-#{book_content}",
+    title: Faker::Book.title,
+    body: Faker::Lorem.sentence(word_count: 5),
     created_at: rand(Time.current.weeks_ago(1).beginning_of_week(start_day= :saturday)..Time.zone.now.end_of_day)
   )
+  
+  # タグ付け
+  tag_num= rand(1..3)
+  tag_list = ActsAsTaggableOn::Tag.new
+  book.tag_list = (1..tag_num).map {|x| Faker::Book.genre}
+  book.save
+
+
 end
 
 (BOOK_AMOUT*2).times do |n|
@@ -41,5 +49,4 @@ end
       followed_id: followed_id
     )
   end
-  
 end

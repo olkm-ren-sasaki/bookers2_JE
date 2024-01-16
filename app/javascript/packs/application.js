@@ -13,6 +13,8 @@ import "bootstrap"
 
 import '@fortawesome/fontawesome-free/js/all';
 import "../stylesheets/application" 
+import 'jquery'
+import "script.js"
 
 Rails.start()
 Turbolinks.start()
@@ -20,3 +22,7 @@ ActiveStorage.start()
 
 global.$ = jQuery;
 window.$ = jQuery;
+
+// $(function () {
+//     $('#js-slider-1').slick();
+// });
