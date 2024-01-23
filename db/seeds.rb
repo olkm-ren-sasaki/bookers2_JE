@@ -3,10 +3,20 @@ BOOK_AMOUT = 20
 GROUP_AMOUT = 10
 
 USER_AMOUT.times do |n|
+    address_list = [
+      ["3771711", "群馬県", "吾妻郡", "草津町草津４０１"],
+      ["1510053", "東京都", "渋谷区", "代々木４丁目６"],
+      ["1608330", "東京都", "新宿区", "西新宿２丁目２−１"],
+    ]
+    address = address_list.sample
     User.find_or_create_by!(email: "sample#{n + 1}@sample") do |user|
         user.email = "sample#{n + 1}@sample"
         user.name = "sample#{n + 1}"
         user.password = "asdfasdf"
+        user.postal_code = address[0]
+        user.prefecture_code = JpPrefecture::Prefecture.find(name: address[1]).code
+        user.address_city = address[2]
+        user.address_street = address[3]
     end
 end
 

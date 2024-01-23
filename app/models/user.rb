@@ -18,6 +18,27 @@ class User < ApplicationRecord
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
+
+  # jp_prefectureの記述
+  include JpPrefecture
+  jp_prefecture :prefecture_code
+
+  def prefecture_name
+    JpPrefecture::Prefecture.find(code: prefecture_code).try(:name)
+  end
+  
+  def prefecture_name=(prefecture_name)
+    self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
+  end
+
+  def address
+    if address_building
+      prefecture_name + address_city + address_street + address_building
+    else
+      prefecture_name + address_city + address_street
+    end
+  end
+  
   
   def follow(user)
     relationships.create(followed_id: user.id)

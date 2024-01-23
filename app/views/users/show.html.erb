@@ -11,4 +11,43 @@
       <%= render 'books/index',books: @books %>
     </div>
   </div>
+  <% if current_user == @user %>
+  <div>
+    <h2>Address</h2>
+    <p id="address"><%= "〒#{@user.postal_code} #{@user.address}"%></p>
+
+    <div id='map' style="width: 100%;height: 400px;"></div>
+  </div>
+  <% end %>
 </div>
+
+<script>
+  function initMap() {
+    const target = document.getElementById("map");
+    const address = document.getElementById('address').innerHTML.split(" ").pop()
+    const geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode({ address: address }, function (results, status) {
+      if (status === google.maps.GeocoderStatus.OK) {
+        const latlng = {
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        }
+        const opts = {
+        zoom: 15,
+        center: new google.maps.LatLng(latlng)
+        }
+        const map = new google.maps.Map(document.getElementById('map'), opts)
+        new google.maps.Marker({
+          position: latlng,
+          map: map 
+        })
+
+    } else {
+      console.error('Geocode was not successful for the following reason: ' + status)
+    }
+     });
+
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_API_KEY"] %>&callback=initMap" async defer></script>

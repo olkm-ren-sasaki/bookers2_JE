@@ -62,4 +62,7 @@ gem 'devise-i18n-views'
 gem 'acts-as-taggable-on'
 gem 'faker'
 gem 'ransack'
+gem 'jp_prefecture'
+gem 'gon'
+gem "geocoder"
 
